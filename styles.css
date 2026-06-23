@@ -372,3 +372,25 @@ footer {
     margin-top: 3px; display: none;
 }
 .field-error.visible { display: block; }
+
+/* Input validation states (toggled by scripts.js) */
+.reg-form input.invalid, .reg-form select.invalid { border-color: #c0392b; }
+.reg-form input.valid,   .reg-form select.valid   { border-color: #7cc47f; }
+
+/* Inline per-field success hint */
+.success-msg {
+    color: #1e7d34; font-size: 12px;
+    margin-top: 3px; display: none;
+}
+.success-msg.visible { display: block; }
+
+/* Whole-form success banner */
+#form-success-banner {
+    display: none; margin-top: 18px;
+    padding: 14px 16px;
+    background: linear-gradient(90deg, #e8f8ec, #d4f3dc);
+    border-left: 4px solid #2e7d32;
+    border-radius: 8px;
+    color: #1e5631; font-size: 14px; line-height: 1.6;
+}
+#form-success-banner.visible { display: block; }

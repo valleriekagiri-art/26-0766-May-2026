@@ -1,290 +1,233 @@
-<!-- Save this content as: script.js -->
-<!--
-PASTE EVERYTHING BELOW THIS LINE INTO script.js
-(remove this comment block in the actual file)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Val's Online Jewelry</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-/* ═══════════════════════════════════════════
-   Val's Online Jewelry — JavaScript
-   File: script.js
-   Features:
-     - Promotional popup on page load
-     - Auth modal (Login + Register)
-     - Email validation: must match val@gmail.com pattern
-═══════════════════════════════════════════ */
+    <!-- ═══════════ HEADER ═══════════ -->
+    <header>
+        <h1>VAL'S ONLINE JEWELRY</h1>
+        <p>Timeless elegance, handcrafted for you</p>
+    </header>
 
-/* ─── PROMO POPUP ─────────────────────────── */
+    <!-- ═══════════ NAV ═══════════ -->
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#prices">Prices</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#videos">Videos</a>
+        <a href="#register">Register</a>
+        <a href="#contact">Contact</a>
+    </nav>
 
-/**
- * Show the promotional popup after a short delay on page load.
- */
-window.addEventListener('DOMContentLoaded', function () {
-    setTimeout(function () {
-        var overlay = document.getElementById('promo-overlay');
-        if (overlay) {
-            overlay.style.display = 'flex';
-        }
-    }, 1200); // 1.2-second delay so page renders first
-});
+    <!-- ═══════════ WELCOME ═══════════ -->
+    <section id="home">
+        <h2>Welcome</h2>
+        <div class="welcome-box">
+            At <strong>Val's Online Jewelry</strong> we craft and curate fine pieces that
+            celebrate every milestone — from everyday sparkle to once-in-a-lifetime moments.
+            Each item is hand-finished with care using ethically sourced materials. Browse our
+            collections below, register to unlock exclusive offers, and let your story shine. 💎
+        </div>
+    </section>
 
-/** Close the promo popup. */
-function closePromo() {
-    var overlay = document.getElementById('promo-overlay');
-    if (overlay) {
-        overlay.style.opacity = '0';
-        overlay.style.transition = 'opacity 0.3s ease';
-        setTimeout(function () { overlay.style.display = 'none'; }, 300);
-    }
-}
+    <!-- ═══════════ PRODUCTS ═══════════ -->
+    <section id="products">
+        <h2>Our Collections</h2>
+        <div class="lists-row">
+            <ul class="list-box">
+                <h3>Featured Pieces</h3>
+                <li>Rose-gold pendant necklaces</li>
+                <li>Hand-beaded statement earrings</li>
+                <li>Sterling silver charm bracelets</li>
+                <li>Birthstone rings (custom sizing)</li>
+                <li>Bridal &amp; anniversary sets</li>
+            </ul>
+            <ol class="list-box">
+                <h3>How to Order</h3>
+                <li>Browse the collection &amp; price list</li>
+                <li>Register your details below</li>
+                <li>Send us your selection via WhatsApp</li>
+                <li>Confirm payment (M-Pesa or card)</li>
+                <li>Receive free delivery within Nairobi</li>
+            </ol>
+        </div>
+    </section>
 
-// Close promo when clicking outside the modal box
-document.addEventListener('click', function (e) {
-    var promoOverlay = document.getElementById('promo-overlay');
-    if (promoOverlay && e.target === promoOverlay) {
-        closePromo();
-    }
-});
+    <!-- ═══════════ PRICE LIST ═══════════ -->
+    <section id="prices">
+        <h2>Price List</h2>
+        <div class="table-wrap">
+            <table>
+                <tr><th>Item</th><th>Material</th><th>Price (KSh)</th></tr>
+                <tr><td>Pendant Necklace</td><td>Rose Gold</td><td>3,500</td></tr>
+                <tr><td>Statement Earrings</td><td>Hand-beaded</td><td>1,800</td></tr>
+                <tr><td>Charm Bracelet</td><td>Sterling Silver</td><td>2,400</td></tr>
+                <tr><td>Birthstone Ring</td><td>Gold-plated</td><td>2,900</td></tr>
+                <tr><td>Bridal Set</td><td>White Gold</td><td>9,500</td></tr>
+            </table>
+        </div>
+    </section>
 
-/* ─── AUTH MODAL ──────────────────────────── */
+    <!-- ═══════════ GALLERY ═══════════ -->
+    <section id="gallery">
+        <h2>Gallery</h2>
+        <table class="img-grid">
+            <tr>
+                <td><img src="https://picsum.photos/seed/necklace/400/300" alt="Necklace"><div class="caption">Rose-Gold Pendant</div></td>
+                <td><img src="https://picsum.photos/seed/earrings/400/300" alt="Earrings"><div class="caption">Beaded Earrings</div></td>
+                <td><img src="https://picsum.photos/seed/bracelet/400/300" alt="Bracelet"><div class="caption">Charm Bracelet</div></td>
+                <td><img src="https://picsum.photos/seed/ring/400/300" alt="Ring"><div class="caption">Birthstone Ring</div></td>
+            </tr>
+        </table>
+    </section>
 
-/** Open the authentication modal. */
-function openAuth() {
-    var overlay = document.getElementById('auth-overlay');
-    if (overlay) {
-        overlay.style.display = 'flex';
-        overlay.style.opacity = '0';
-        overlay.style.transition = 'opacity 0.3s ease';
-        setTimeout(function () { overlay.style.opacity = '1'; }, 10);
-    }
-}
+    <hr class="divider">
 
-/** Close the authentication modal and reset forms. */
-function closeAuth() {
-    var overlay = document.getElementById('auth-overlay');
-    if (overlay) {
-        overlay.style.opacity = '0';
-        setTimeout(function () {
-            overlay.style.display = 'none';
-            resetForms();
-        }, 300);
-    }
-}
+    <!-- ═══════════ VIDEOS ═══════════ -->
+    <section id="videos">
+        <h2>Videos</h2>
+        <!-- Replace the VIDEO IDs below with your own YouTube videos -->
+        <table class="video-grid">
+            <tr>
+                <td><iframe src="https://www.youtube.com/embed/aqz-KE-bpKQ" title="Jewelry showcase" allowfullscreen></iframe><div class="vcap">Behind the Craft</div></td>
+                <td><iframe src="https://www.youtube.com/embed/aqz-KE-bpKQ" title="Collection reel" allowfullscreen></iframe><div class="vcap">New Collection Reel</div></td>
+            </tr>
+        </table>
+    </section>
 
-// Close auth modal when clicking outside
-document.addEventListener('click', function (e) {
-    var authOverlay = document.getElementById('auth-overlay');
-    if (authOverlay && e.target === authOverlay) {
-        closeAuth();
-    }
-});
+    <!-- ═══════════ REGISTER ═══════════ -->
+    <section id="register">
+        <h2>Register</h2>
+        <div style="max-width:480px; margin:0 auto; background:white; padding:28px 32px; border-radius:12px; box-shadow:0 4px 18px rgba(183,110,121,0.15);">
+            <p style="text-align:center; color:#4a2030; font-size:14px; margin-bottom:8px;">
+                Join the Val's family and unlock exclusive deals! ✨
+            </p>
+            <form class="reg-form" id="reg-form" novalidate>
+                <label for="reg-name">Full Name *</label>
+                <input type="text" id="reg-name" placeholder="e.g. Valerie Wanjiru">
+                <span class="field-error" id="err-name"></span>
+                <span class="success-msg"></span>
 
-// Close modals with Escape key
-document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-        closePromo();
-        closeAuth();
-    }
-});
+                <label for="reg-email">Email Address *</label>
+                <input type="email" id="reg-email" placeholder="e.g. val@gmail.com">
+                <span class="field-error" id="err-email"></span>
+                <span class="success-msg"></span>
 
-/**
- * Switch between Login and Register tabs.
- * @param {string} tab - 'login' or 'register'
- */
-function switchTab(tab) {
-    var loginForm    = document.getElementById('form-login');
-    var registerForm = document.getElementById('form-register');
-    var tabLogin     = document.getElementById('tab-login');
-    var tabRegister  = document.getElementById('tab-register');
+                <label for="reg-phone">Phone Number *</label>
+                <input type="tel" id="reg-phone" placeholder="e.g. 0788 945 632">
+                <span class="field-error" id="err-phone"></span>
+                <span class="success-msg"></span>
 
-    if (tab === 'login') {
-        loginForm.style.display    = 'block';
-        registerForm.style.display = 'none';
-        tabLogin.classList.add('active');
-        tabRegister.classList.remove('active');
-    } else {
-        loginForm.style.display    = 'none';
-        registerForm.style.display = 'block';
-        tabLogin.classList.remove('active');
-        tabRegister.classList.add('active');
-    }
+                <label for="reg-gender">Gender *</label>
+                <select id="reg-gender">
+                    <option value="">Select…</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="other">Prefer not to say</option>
+                </select>
+                <span class="field-error" id="err-gender"></span>
 
-    clearAllErrors();
-    hideMessages();
-}
+                <button type="submit" class="popup-btn">Register</button>
+                <div id="form-success-banner"></div>
+            </form>
+        </div>
+    </section>
 
-/* ─── EMAIL VALIDATION ────────────────────── */
+    <!-- ═══════════ CONTACT ═══════════ -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="icon">📞</div>
+                <strong>Call / WhatsApp</strong>
+                <p>+254 788 945 632</p>
+            </div>
+            <div class="contact-card">
+                <div class="icon">✉️</div>
+                <strong>Email</strong>
+                <p>val@gmail.com</p>
+            </div>
+            <div class="contact-card">
+                <div class="icon">📍</div>
+                <strong>Location</strong>
+                <p>Nairobi, Kenya</p>
+            </div>
+        </div>
+    </section>
 
-/**
- * Validate email: must be in the format something@gmail.com
- * - Local part: letters, digits, dots, underscores, hyphens (1+ chars)
- * - Domain: must be exactly @gmail.com
- * Examples: val@gmail.com, valerie.wk@gmail.com
- *
- * @param {string} email
- * @returns {boolean}
- */
-function isValidGmailEmail(email) {
-    // Pattern: one or more valid chars, @gmail.com (case-insensitive)
-    var pattern = /^[a-zA-Z0-9._\-]+@gmail\.com$/i;
-    return pattern.test(email.trim());
-}
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer>
+        © 2026 Val's Online Jewelry — Handcrafted with love. All rights reserved.
+    </footer>
 
-/* ─── LOGIN HANDLER ───────────────────────── */
+    <!-- ═══════════════════════════════════════════
+         POPUPS (welcome → promo → fixture)
+         ═══════════════════════════════════════════ -->
 
-function handleLogin() {
-    clearAllErrors();
-    hideMessages();
+    <!-- Welcome -->
+    <div class="popup-overlay" id="popup-welcome">
+        <div class="popup-modal">
+            <button class="popup-close" onclick="closePopup('popup-welcome')">×</button>
+            <div class="popup-badge">💎</div>
+            <div class="popup-title">Welcome to Val's Jewelry</div>
+            <div class="popup-subtitle">Handcrafted elegance, made for you</div>
+            <div class="popup-body">
+                Discover timeless pieces and enjoy free delivery within Nairobi on your first order.
+            </div>
+            <div class="popup-steps">
+                <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+            </div>
+            <button class="popup-btn" onclick="closePopup('popup-welcome'); openPopup('popup-promo')">See our offers →</button>
+            <span class="popup-skip" onclick="closePopup('popup-welcome')">Skip for now</span>
+        </div>
+    </div>
 
-    var emailInput = document.getElementById('login-email');
-    var passInput  = document.getElementById('login-pass');
-    var email      = emailInput.value.trim();
-    var password   = passInput.value;
-    var valid      = true;
+    <!-- Promo -->
+    <div class="popup-overlay" id="popup-promo">
+        <div class="popup-modal">
+            <button class="popup-close" onclick="closePopup('popup-promo')">×</button>
+            <div class="popup-badge">🎁</div>
+            <div class="popup-title">This Month's Offers</div>
+            <div class="popup-subtitle">Limited-time only</div>
+            <div class="popup-body">
+                <span class="promo-tag">15% OFF Necklaces</span>
+                <span class="promo-tag">Buy 2 Get 1 Earrings</span>
+                <span class="promo-tag">Free Engraving</span>
+            </div>
+            <div class="popup-steps">
+                <span class="dot"></span><span class="dot active"></span><span class="dot"></span>
+            </div>
+            <button class="popup-btn" onclick="closePopup('popup-promo'); openPopup('popup-fixture')">What's coming up →</button>
+            <span class="popup-skip" onclick="closePopup('popup-promo')">Skip for now</span>
+        </div>
+    </div>
 
-    // Validate email
-    if (email === '') {
-        showError('login-email-err', 'Email address is required.');
-        markInvalid(emailInput);
-        valid = false;
-    } else if (!isValidGmailEmail(email)) {
-        showError('login-email-err', 'Email must be in the format: name@gmail.com');
-        markInvalid(emailInput);
-        valid = false;
-    }
+    <!-- Fixture / Events -->
+    <div class="popup-overlay" id="popup-fixture">
+        <div class="popup-modal">
+            <button class="popup-close" onclick="closePopup('popup-fixture')">×</button>
+            <div class="popup-badge">📅</div>
+            <div class="popup-title">Upcoming Events</div>
+            <div class="popup-subtitle">Come say hello</div>
+            <div class="popup-body">
+                <div class="fixture-item"><span class="fix-date">Jul 05</span> Pop-up stall — Sarit Centre</div>
+                <div class="fixture-item"><span class="fix-date">Jul 19</span> Bridal showcase — Westlands</div>
+                <div class="fixture-item"><span class="fix-date">Aug 02</span> Beading workshop — online</div>
+            </div>
+            <div class="popup-steps">
+                <span class="dot"></span><span class="dot"></span><span class="dot active"></span>
+            </div>
+            <button class="popup-btn" onclick="closePopup('popup-fixture'); document.getElementById('register').scrollIntoView({behavior:'smooth'});">Register now →</button>
+            <span class="popup-skip" onclick="closePopup('popup-fixture')">Maybe later</span>
+        </div>
+    </div>
 
-    // Validate password
-    if (password === '') {
-        showError('login-pass-err', 'Password is required.');
-        markInvalid(passInput);
-        valid = false;
-    } else if (password.length < 6) {
-        showError('login-pass-err', 'Password must be at least 6 characters.');
-        markInvalid(passInput);
-        valid = false;
-    }
-
-    if (!valid) return;
-
-    // Simulated success (in production this would hit an API)
-    var successMsg = document.getElementById('login-success');
-    successMsg.textContent = 'Welcome back! Signed in successfully as ' + email;
-    successMsg.style.display = 'block';
-
-    // Auto-close after success
-    setTimeout(function () {
-        closeAuth();
-    }, 2000);
-}
-
-/* ─── REGISTER HANDLER ────────────────────── */
-
-function handleRegister() {
-    clearAllErrors();
-    hideMessages();
-
-    var nameInput  = document.getElementById('reg-name');
-    var emailInput = document.getElementById('reg-email');
-    var phoneInput = document.getElementById('reg-phone');
-    var name       = nameInput.value.trim();
-    var email      = emailInput.value.trim();
-    var phone      = phoneInput.value.trim();
-    var genderSel  = document.querySelector('input[name="gender"]:checked');
-    var valid      = true;
-
-    // Validate Full Name
-    if (name === '') {
-        showError('reg-name-err', 'Full name is required.');
-        markInvalid(nameInput);
-        valid = false;
-    } else if (name.length < 2) {
-        showError('reg-name-err', 'Please enter your full name (at least 2 characters).');
-        markInvalid(nameInput);
-        valid = false;
-    }
-
-    // Validate Email (must be @gmail.com)
-    if (email === '') {
-        showError('reg-email-err', 'Email address is required.');
-        markInvalid(emailInput);
-        valid = false;
-    } else if (!isValidGmailEmail(email)) {
-        showError('reg-email-err', 'Email must be in the format: name@gmail.com (only @gmail.com is accepted).');
-        markInvalid(emailInput);
-        valid = false;
-    }
-
-    // Validate Phone Number
-    if (phone === '') {
-        showError('reg-phone-err', 'Phone number is required.');
-        markInvalid(phoneInput);
-        valid = false;
-    } else if (!/^[0-9\s\+\-]{7,15}$/.test(phone)) {
-        showError('reg-phone-err', 'Please enter a valid phone number (digits only, 7-15 characters).');
-        markInvalid(phoneInput);
-        valid = false;
-    }
-
-    // Validate Gender
-    if (!genderSel) {
-        showError('reg-gender-err', 'Please select your gender.');
-        valid = false;
-    }
-
-    if (!valid) return;
-
-    // Simulated success
-    var successMsg = document.getElementById('reg-success');
-    successMsg.textContent =
-        'Account created successfully! Welcome, ' + name + '! You can now sign in.';
-    successMsg.style.display = 'block';
-
-    // Clear form fields after success
-    nameInput.value  = '';
-    emailInput.value = '';
-    phoneInput.value = '';
-    document.querySelectorAll('input[name="gender"]').forEach(function (r) {
-        r.checked = false;
-    });
-
-    // Switch to login tab after a delay
-    setTimeout(function () {
-        switchTab('login');
-    }, 2500);
-}
-
-/* ─── HELPERS ─────────────────────────────── */
-
-function showError(elementId, message) {
-    var el = document.getElementById(elementId);
-    if (el) el.textContent = message;
-}
-
-function markInvalid(input) {
-    if (input) input.classList.add('invalid');
-}
-
-function clearAllErrors() {
-    var errorSpans = document.querySelectorAll('.field-error');
-    errorSpans.forEach(function (span) { span.textContent = ''; });
-
-    var inputs = document.querySelectorAll('.auth-form input');
-    inputs.forEach(function (input) { input.classList.remove('invalid'); });
-}
-
-function hideMessages() {
-    var msgs = document.querySelectorAll('.form-msg');
-    msgs.forEach(function (m) { m.style.display = 'none'; });
-}
-
-function resetForms() {
-    var inputs = document.querySelectorAll('.auth-form input[type="text"],' +
-        '.auth-form input[type="email"],.auth-form input[type="password"],' +
-        '.auth-form input[type="tel"]');
-    inputs.forEach(function (i) { i.value = ''; });
-    document.querySelectorAll('input[name="gender"]').forEach(function (r) {
-        r.checked = false;
-    });
-    clearAllErrors();
-    hideMessages();
-    switchTab('login');
-}
--->
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!-- Save this content as: script.js -->
+<!--
+PASTE EVERYTHING BELOW THIS LINE INTO script.js
+(remove this comment block in the actual file)
+
+/* ═══════════════════════════════════════════
+   Val's Online Jewelry — JavaScript
+   File: script.js
+   Features:
+     - Promotional popup on page load
+     - Auth modal (Login + Register)
+     - Email validation: must match val@gmail.com pattern
+═══════════════════════════════════════════ */
+
+/* ─── PROMO POPUP ─────────────────────────── */
+
+/**
+ * Show the promotional popup after a short delay on page load.
+ */
+window.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        var overlay = document.getElementById('promo-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+        }
+    }, 1200); // 1.2-second delay so page renders first
+});
+
+/** Close the promo popup. */
+function closePromo() {
+    var overlay = document.getElementById('promo-overlay');
+    if (overlay) {
+        overlay.style.opacity = '0';
+        overlay.style.transition = 'opacity 0.3s ease';
+        setTimeout(function () { overlay.style.display = 'none'; }, 300);
+    }
+}
+
+// Close promo when clicking outside the modal box
+document.addEventListener('click', function (e) {
+    var promoOverlay = document.getElementById('promo-overlay');
+    if (promoOverlay && e.target === promoOverlay) {
+        closePromo();
+    }
+});
+
+/* ─── AUTH MODAL ──────────────────────────── */
+
+/** Open the authentication modal. */
+function openAuth() {
+    var overlay = document.getElementById('auth-overlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        overlay.style.opacity = '0';
+        overlay.style.transition = 'opacity 0.3s ease';
+        setTimeout(function () { overlay.style.opacity = '1'; }, 10);
+    }
+}
+
+/** Close the authentication modal and reset forms. */
+function closeAuth() {
+    var overlay = document.getElementById('auth-overlay');
+    if (overlay) {
+        overlay.style.opacity = '0';
+        setTimeout(function () {
+            overlay.style.display = 'none';
+            resetForms();
+        }, 300);
+    }
+}
+
+// Close auth modal when clicking outside
+document.addEventListener('click', function (e) {
+    var authOverlay = document.getElementById('auth-overlay');
+    if (authOverlay && e.target === authOverlay) {
+        closeAuth();
+    }
+});
+
+// Close modals with Escape key
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+        closePromo();
+        closeAuth();
+    }
+});
+
+/**
+ * Switch between Login and Register tabs.
+ * @param {string} tab - 'login' or 'register'
+ */
+function switchTab(tab) {
+    var loginForm    = document.getElementById('form-login');
+    var registerForm = document.getElementById('form-register');
+    var tabLogin     = document.getElementById('tab-login');
+    var tabRegister  = document.getElementById('tab-register');
+
+    if (tab === 'login') {
+        loginForm.style.display    = 'block';
+        registerForm.style.display = 'none';
+        tabLogin.classList.add('active');
+        tabRegister.classList.remove('active');
+    } else {
+        loginForm.style.display    = 'none';
+        registerForm.style.display = 'block';
+        tabLogin.classList.remove('active');
+        tabRegister.classList.add('active');
+    }
+
+    clearAllErrors();
+    hideMessages();
+}
+
+/* ─── EMAIL VALIDATION ────────────────────── */
+
+/**
+ * Validate email: must be in the format something@gmail.com
+ * - Local part: letters, digits, dots, underscores, hyphens (1+ chars)
+ * - Domain: must be exactly @gmail.com
+ * Examples: val@gmail.com, valerie.wk@gmail.com
+ *
+ * @param {string} email
+ * @returns {boolean}
+ */
+function isValidGmailEmail(email) {
+    // Pattern: one or more valid chars, @gmail.com (case-insensitive)
+    var pattern = /^[a-zA-Z0-9._\-]+@gmail\.com$/i;
+    return pattern.test(email.trim());
+}
+
+/* ─── LOGIN HANDLER ───────────────────────── */
+
+function handleLogin() {
+    clearAllErrors();
+    hideMessages();
+
+    var emailInput = document.getElementById('login-email');
+    var passInput  = document.getElementById('login-pass');
+    var email      = emailInput.value.trim();
+    var password   = passInput.value;
+    var valid      = true;
+
+    // Validate email
+    if (email === '') {
+        showError('login-email-err', 'Email address is required.');
+        markInvalid(emailInput);
+        valid = false;
+    } else if (!isValidGmailEmail(email)) {
+        showError('login-email-err', 'Email must be in the format: name@gmail.com');
+        markInvalid(emailInput);
+        valid = false;
+    }
+
+    // Validate password
+    if (password === '') {
+        showError('login-pass-err', 'Password is required.');
+        markInvalid(passInput);
+        valid = false;
+    } else if (password.length < 6) {
+        showError('login-pass-err', 'Password must be at least 6 characters.');
+        markInvalid(passInput);
+        valid = false;
+    }
+
+    if (!valid) return;
+
+    // Simulated success (in production this would hit an API)
+    var successMsg = document.getElementById('login-success');
+    successMsg.textContent = 'Welcome back! Signed in successfully as ' + email;
+    successMsg.style.display = 'block';
+
+    // Auto-close after success
+    setTimeout(function () {
+        closeAuth();
+    }, 2000);
+}
+
+/* ─── REGISTER HANDLER ────────────────────── */
+
+function handleRegister() {
+    clearAllErrors();
+    hideMessages();
+
+    var nameInput  = document.getElementById('reg-name');
+    var emailInput = document.getElementById('reg-email');
+    var phoneInput = document.getElementById('reg-phone');
+    var name       = nameInput.value.trim();
+    var email      = emailInput.value.trim();
+    var phone      = phoneInput.value.trim();
+    var genderSel  = document.querySelector('input[name="gender"]:checked');
+    var valid      = true;
+
+    // Validate Full Name
+    if (name === '') {
+        showError('reg-name-err', 'Full name is required.');
+        markInvalid(nameInput);
+        valid = false;
+    } else if (name.length < 2) {
+        showError('reg-name-err', 'Please enter your full name (at least 2 characters).');
+        markInvalid(nameInput);
+        valid = false;
+    }
+
+    // Validate Email (must be @gmail.com)
+    if (email === '') {
+        showError('reg-email-err', 'Email address is required.');
+        markInvalid(emailInput);
+        valid = false;
+    } else if (!isValidGmailEmail(email)) {
+        showError('reg-email-err', 'Email must be in the format: name@gmail.com (only @gmail.com is accepted).');
+        markInvalid(emailInput);
+        valid = false;
+    }
+
+    // Validate Phone Number
+    if (phone === '') {
+        showError('reg-phone-err', 'Phone number is required.');
+        markInvalid(phoneInput);
+        valid = false;
+    } else if (!/^[0-9\s\+\-]{7,15}$/.test(phone)) {
+        showError('reg-phone-err', 'Please enter a valid phone number (digits only, 7-15 characters).');
+        markInvalid(phoneInput);
+        valid = false;
+    }
+
+    // Validate Gender
+    if (!genderSel) {
+        showError('reg-gender-err', 'Please select your gender.');
+        valid = false;
+    }
+
+    if (!valid) return;
+
+    // Simulated success
+    var successMsg = document.getElementById('reg-success');
+    successMsg.textContent =
+        'Account created successfully! Welcome, ' + name + '! You can now sign in.';
+    successMsg.style.display = 'block';
+
+    // Clear form fields after success
+    nameInput.value  = '';
+    emailInput.value = '';
+    phoneInput.value = '';
+    document.querySelectorAll('input[name="gender"]').forEach(function (r) {
+        r.checked = false;
+    });
+
+    // Switch to login tab after a delay
+    setTimeout(function () {
+        switchTab('login');
+    }, 2500);
+}
+
+/* ─── HELPERS ─────────────────────────────── */
+
+function showError(elementId, message) {
+    var el = document.getElementById(elementId);
+    if (el) el.textContent = message;
+}
+
+function markInvalid(input) {
+    if (input) input.classList.add('invalid');
+}
+
+function clearAllErrors() {
+    var errorSpans = document.querySelectorAll('.field-error');
+    errorSpans.forEach(function (span) { span.textContent = ''; });
+
+    var inputs = document.querySelectorAll('.auth-form input');
+    inputs.forEach(function (input) { input.classList.remove('invalid'); });
+}
+
+function hideMessages() {
+    var msgs = document.querySelectorAll('.form-msg');
+    msgs.forEach(function (m) { m.style.display = 'none'; });
+}
+
+function resetForms() {
+    var inputs = document.querySelectorAll('.auth-form input[type="text"],' +
+        '.auth-form input[type="email"],.auth-form input[type="password"],' +
+        '.auth-form input[type="tel"]');
+    inputs.forEach(function (i) { i.value = ''; });
+    document.querySelectorAll('input[name="gender"]').forEach(function (r) {
+        r.checked = false;
+    });
+    clearAllErrors();
+    hideMessages();
+    switchTab('login');
+}
+-->

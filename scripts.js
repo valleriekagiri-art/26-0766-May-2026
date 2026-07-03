@@ -149,7 +149,7 @@ function attachLiveValidation() {
 }
 
 /* ── Form submission ── */
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
     e.preventDefault();
 
     const fields = [
@@ -177,15 +177,32 @@ function handleFormSubmit(e) {
 
     if (!allValid) return;
 
-    /* All valid — show success banner */
-    const name   = document.getElementById('reg-name').value.trim().split(' ')[0];
     const banner = document.getElementById('form-success-banner');
+
+    const { error } = await supabaseClient
+        .from('customers')
+        .insert([{
+            full_name: document.getElementById('reg-name').value.trim(),
+            email: document.getElementById('reg-email').value.trim(),
+            phone: document.getElementById('reg-phone').value.trim(),
+            gender: document.getElementById('reg-gender').value
+        }]);
+
+    if (error) {
+        console.error('Supabase error:', error);
+        if (banner) {
+            banner.innerHTML = '⚠️ Something went wrong. Please try again.';
+            banner.classList.add('visible');
+        }
+        return;
+    }
+
+    const name = document.getElementById('reg-name').value.trim().split(' ')[0];
     if (banner) {
         banner.innerHTML = '💍 Thank you, <strong>' + name + '</strong>! You\'re now registered with Val\'s Online Jewelry.<br>We\'ll be in touch with exclusive deals!';
         banner.classList.add('visible');
     }
 
-    /* Reset form */
     document.getElementById('reg-form').reset();
     fields.forEach(function (f) {
         const el  = document.getElementById(f.id);

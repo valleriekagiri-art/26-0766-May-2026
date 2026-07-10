@@ -1,12 +1,3 @@
-/* ══════════════════════════════════════════
-   Val's Online Jewelry — scripts.js
-   Popups (welcome, promo, fixture) + Registration form
-══════════════════════════════════════════ */
- const supabaseClient = supabase.createClient('https://gwlqszrcjaxwyvmkaxoc.supabase.co', 'sb_publishable_167OSASs4Ijj-mzoMX6Sqg_DIxq7S1G');
-/* ─────────────────────────────────────────
-   1. POPUP SYSTEM
-───────────────────────────────────────── */
-
 function openPopup(id) {
     const overlay = document.getElementById(id);
     if (!overlay) return;
@@ -21,7 +12,6 @@ function closePopup(id) {
     document.body.style.overflow = '';
 }
 
-/* Close popup when clicking the dark overlay (outside the box) */
 document.addEventListener('click', function (e) {
     if (e.target.classList.contains('popup-overlay')) {
         e.target.classList.remove('active');
@@ -29,7 +19,6 @@ document.addEventListener('click', function (e) {
     }
 });
 
-/* Close on Escape key */
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
         document.querySelectorAll('.popup-overlay.active').forEach(function (el) {
@@ -39,26 +28,21 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-/* Auto-show welcome popup after 800 ms on page load */
 window.addEventListener('load', function () {
     setTimeout(function () {
         openPopup('popup-welcome');
     }, 800);
 });
 
-
 /* ─────────────────────────────────────────
    2. REGISTRATION FORM VALIDATION
 ───────────────────────────────────────── */
 
-/* ── Helpers ── */
 function showError(inputEl, msgEl, message) {
     inputEl.classList.remove('valid');
     inputEl.classList.add('invalid');
     msgEl.textContent = message;
     msgEl.classList.add('visible');
-
-    // hide any success msg sibling
     const sib = inputEl.parentElement.querySelector('.success-msg');
     if (sib) sib.classList.remove('visible');
 }
@@ -67,7 +51,6 @@ function showSuccess(inputEl, msgEl, message) {
     inputEl.classList.remove('invalid');
     inputEl.classList.add('valid');
     msgEl.classList.remove('visible');
-
     const sib = inputEl.parentElement.querySelector('.success-msg');
     if (sib) {
         sib.textContent = message || '✓ Looks good!';
@@ -82,7 +65,6 @@ function clearState(inputEl, errEl) {
     if (sib) sib.classList.remove('visible');
 }
 
-/* ── Validators ── */
 function validateName(value) {
     if (!value.trim()) return 'Name is required.';
     if (value.trim().length < 2) return 'Name must be at least 2 characters.';
@@ -92,14 +74,12 @@ function validateName(value) {
 
 function validateEmail(value) {
     if (!value.trim()) return 'Email is required.';
-    /* Basic RFC-style check */
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim())) return 'Enter a valid email address (e.g. val@gmail.com).';
     return null;
 }
 
 function validatePhone(value) {
     if (!value.trim()) return 'Phone number is required.';
-    /* Accept formats: 07XXXXXXXX, +2547XXXXXXXX, 2547XXXXXXXX (10-13 digits) */
     const cleaned = value.replace(/[\s\-()]/g, '');
     if (!/^(\+?254|0)[17]\d{8}$/.test(cleaned)) {
         return 'Enter a valid Kenyan number (e.g. 0788 945 632 or +254788945632).';
@@ -112,7 +92,6 @@ function validateGender(value) {
     return null;
 }
 
-/* ── Live validation (on blur / change) ── */
 function attachLiveValidation() {
     const fields = [
         { id: 'reg-name',   errId: 'err-name',   fn: validateName   },
@@ -137,7 +116,6 @@ function attachLiveValidation() {
             }
         });
 
-        /* Clear red state while typing (so it isn't distracting mid-type) */
         if (el.tagName !== 'SELECT') {
             el.addEventListener('input', function () {
                 if (el.classList.contains('invalid')) {
@@ -148,7 +126,6 @@ function attachLiveValidation() {
     });
 }
 
-/* ── Form submission ── */
 async function handleFormSubmit(e) {
     e.preventDefault();
 
@@ -211,10 +188,8 @@ async function handleFormSubmit(e) {
     });
 }
 
-/* ── Init on DOM ready ── */
 document.addEventListener('DOMContentLoaded', function () {
     attachLiveValidation();
-
     const form = document.getElementById('reg-form');
     if (form) {
         form.addEventListener('submit', handleFormSubmit);

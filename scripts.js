@@ -293,3 +293,4 @@ async function handleCheckout() {
     closePopup('popup-cart');
     nameEl.value = '';
     phoneEl.value = '';
+}

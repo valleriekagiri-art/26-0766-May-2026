@@ -2,7 +2,7 @@
    Val's Online Jewelry — scripts.js
    Popups (welcome, promo, fixture) + Registration form
 ══════════════════════════════════════════ */
-
+ const supabaseClient = supabase.createClient('https://gwlqszrcjaxwyvmkaxoc.supabase.co', 'sb_publishable_167OSASs4Ijj-mzoMX6Sqg_DIxq7S1G');
 /* ─────────────────────────────────────────
    1. POPUP SYSTEM
 ───────────────────────────────────────── */

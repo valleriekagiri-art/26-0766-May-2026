@@ -64,19 +64,47 @@
     </section>
 
     <!-- ═══════════ PRICE LIST ═══════════ -->
+   <!-- ═══════════ PRICE LIST ═══════════ -->
     <section id="prices">
         <h2>Price List</h2>
         <div class="table-wrap">
             <table>
-                <tr><th>Item</th><th>Material</th><th>Price (KSh)</th></tr>
-                <tr><td>Pendant Necklace</td><td>Rose Gold</td><td>3,500</td></tr>
-                <tr><td>Statement Earrings</td><td>Hand-beaded</td><td>1,800</td></tr>
-                <tr><td>Charm Bracelet</td><td>Sterling Silver</td><td>2,400</td></tr>
-                <tr><td>Birthstone Ring</td><td>Gold-plated</td><td>2,900</td></tr>
-                <tr><td>Bridal Set</td><td>White Gold</td><td>9,500</td></tr>
+                <tr><th>Item</th><th>Material</th><th>Price (KSh)</th><th></th></tr>
+                <tr><td>Pendant Necklace</td><td>Rose Gold</td><td>3,500</td>
+                    <td><button class="add-cart-btn" data-name="Pendant Necklace" data-price="3500">Add to Cart</button></td></tr>
+                <tr><td>Statement Earrings</td><td>Hand-beaded</td><td>1,800</td>
+                    <td><button class="add-cart-btn" data-name="Statement Earrings" data-price="1800">Add to Cart</button></td></tr>
+                <tr><td>Charm Bracelet</td><td>Sterling Silver</td><td>2,400</td>
+                    <td><button class="add-cart-btn" data-name="Charm Bracelet" data-price="2400">Add to Cart</button></td></tr>
+                <tr><td>Birthstone Ring</td><td>Gold-plated</td><td>2,900</td>
+                    <td><button class="add-cart-btn" data-name="Birthstone Ring" data-price="2900">Add to Cart</button></td></tr>
+                <tr><td>Bridal Set</td><td>White Gold</td><td>9,500</td>
+                    <td><button class="add-cart-btn" data-name="Bridal Set" data-price="9500">Add to Cart</button></td></tr>
             </table>
         </div>
     </section>
+
+    <!-- Floating cart button -->
+    <div id="cart-fab" onclick="openPopup('popup-cart')">
+        🛒 <span id="cart-count">0</span>
+    </div>
+
+    <!-- Cart popup -->
+    <div class="popup-overlay" id="popup-cart">
+        <div class="popup-modal">
+            <button class="popup-close" onclick="closePopup('popup-cart')">×</button>
+            <div class="popup-title">Your Cart</div>
+            <div id="cart-items"></div>
+            <div id="cart-total"></div>
+            <div style="margin-top:16px;">
+                <label for="cart-name">Your Name *</label>
+                <input type="text" id="cart-name" placeholder="Full name">
+                <label for="cart-phone">Your Phone *</label>
+                <input type="tel" id="cart-phone" placeholder="e.g. 0788 945 632">
+            </div>
+            <button class="popup-btn" id="checkout-btn" onclick="handleCheckout()">Checkout via WhatsApp</button>
+        </div>
+    </div>
 
     <!-- ═══════════ GALLERY ═══════════ -->
     <section id="gallery">

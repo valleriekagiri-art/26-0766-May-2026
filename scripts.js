@@ -195,3 +195,106 @@ document.addEventListener('DOMContentLoaded', function () {
         form.addEventListener('submit', handleFormSubmit);
     }
 });
+/* ─────────────────────────────────────────
+   3. CART & CHECKOUT
+───────────────────────────────────────── */
+
+let cart = [];
+
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('add-cart-btn')) {
+        const name = e.target.getAttribute('data-name');
+        const price = parseFloat(e.target.getAttribute('data-price'));
+
+        const existing = cart.find(item => item.name === name);
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            cart.push({ name, price, qty: 1 });
+        }
+        renderCart();
+        openPopup('popup-cart');
+    }
+
+    if (e.target.classList.contains('remove-item-btn')) {
+        const name = e.target.getAttribute('data-name');
+        cart = cart.filter(item => item.name !== name);
+        renderCart();
+    }
+});
+
+function renderCart() {
+    const cartItemsEl = document.getElementById('cart-items');
+    const cartTotalEl = document.getElementById('cart-total');
+    const cartCountEl = document.getElementById('cart-count');
+
+    if (!cartItemsEl) return;
+
+    if (cart.length === 0) {
+        cartItemsEl.innerHTML = '<p>Your cart is empty.</p>';
+        cartTotalEl.textContent = '';
+    } else {
+        cartItemsEl.innerHTML = cart.map(item => `
+            <div class="cart-line">
+                <span>${item.name} × ${item.qty}</span>
+                <span>KSh ${(item.price * item.qty).toLocaleString()}
+                    <button class="remove-item-btn" data-name="${item.name}">✕</button>
+                </span>
+            </div>
+        `).join('');
+
+        const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+        cartTotalEl.textContent = 'Total: KSh ' + total.toLocaleString();
+    }
+
+    const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+    cartCountEl.textContent = totalCount;
+}
+
+async function handleCheckout() {
+    const nameEl = document.getElementById('cart-name');
+    const phoneEl = document.getElementById('cart-phone');
+
+    if (cart.length === 0) {
+        alert('Your cart is empty.');
+        return;
+    }
+    if (!nameEl.value.trim()) {
+        alert('Please enter your name.');
+        return;
+    }
+    if (!phoneEl.value.trim()) {
+        alert('Please enter your phone number.');
+        return;
+    }
+
+    const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+    const { error } = await supabaseClient
+        .from('orders')
+        .insert([{
+            customer_name: nameEl.value.trim(),
+            customer_phone: phoneEl.value.trim(),
+            items: cart,
+            total_amount: total,
+            status: 'pending'
+        }]);
+
+    if (error) {
+        console.error('Supabase error:', error);
+        alert('Something went wrong saving your order. Please try again.');
+        return;
+    }
+
+    const itemsList = cart.map(item => `${item.name} x${item.qty} - KSh ${item.price * item.qty}`).join('%0A');
+    const message = `Hello, I'd like to order:%0A${itemsList}%0A%0ATotal: KSh ${total}%0AName: ${nameEl.value.trim()}%0APhone: ${phoneEl.value.trim()}`;
+    const whatsappUrl = `https://wa.me/254788945632?text=${message}`;
+
+    window.open(whatsappUrl, '_blank');
+
+    cart = [];
+    renderCart();
+    closePopup('popup-cart');
+    nameEl.value = '';
+    phoneEl.value = '';
+}

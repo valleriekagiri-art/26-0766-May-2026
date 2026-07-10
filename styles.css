@@ -394,3 +394,48 @@ footer {
     color: #1e5631; font-size: 14px; line-height: 1.6;
 }
 #form-success-banner.visible { display: block; }
+#cart-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #b76e79;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 50px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 999;
+}
+
+#cart-count {
+    background: white;
+    color: #b76e79;
+    border-radius: 50%;
+    padding: 2px 8px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+.cart-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-line button {
+    background: none;
+    border: none;
+    color: #b76e79;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#cart-total {
+    text-align: right;
+    font-weight: bold;
+    margin-top: 12px;
+    font-size: 16px;
+}

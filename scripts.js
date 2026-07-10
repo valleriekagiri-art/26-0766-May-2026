@@ -286,15 +286,10 @@ async function handleCheckout() {
         return;
     }
 
-    const itemsList = cart.map(item => `${item.name} x${item.qty} - KSh ${item.price * item.qty}`).join('%0A');
-    const message = `Hello, I'd like to order:%0A${itemsList}%0A%0ATotal: KSh ${total}%0AName: ${nameEl.value.trim()}%0APhone: ${phoneEl.value.trim()}`;
-    const whatsappUrl = `https://wa.me/254788945632?text=${message}`;
-
-    window.open(whatsappUrl, '_blank');
+   alert('🎉 Thank you, ' + nameEl.value.trim() + '! Your order has been placed. We\'ll contact you shortly at ' + phoneEl.value.trim() + ' to confirm payment and delivery.');
 
     cart = [];
     renderCart();
     closePopup('popup-cart');
     nameEl.value = '';
     phoneEl.value = '';
-}
